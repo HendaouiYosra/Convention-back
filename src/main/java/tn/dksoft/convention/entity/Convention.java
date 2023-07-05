@@ -15,18 +15,33 @@ public class Convention {
     private String societe2;
     private Date date_creation;
     private Date date_effet;
-    private String etat;
+    private Boolean etat_signature1;
+    private Boolean etat_signature2;
+    private String cadre;
+    public Convention() {
 
-    public Convention(long id, String societe1, String societe2, Date date_creation, Date date_effet, String etat) {
+    }
+
+    public Convention(long id, String societe1, String societe2, Date date_creation, Date date_effet, Boolean etat_signature1,Boolean etat_signature2,String cadre) {
         this.id = id;
         this.societe1 = societe1;
         this.societe2 = societe2;
         this.date_creation = date_creation;
         this.date_effet = date_effet;
-        this.etat = etat;
+        this.etat_signature1 = etat_signature1;
+        this.etat_signature2 = etat_signature2;
+        this.cadre = cadre;
     }
     public long getId() {
         return id;
+    }
+
+    public String getCadre() {
+        return cadre;
+    }
+
+    public void setCadre(String cadre) {
+        this.cadre = cadre;
     }
 
     public String getSociete1() {
@@ -45,9 +60,7 @@ public class Convention {
         return date_effet;
     }
 
-    public String getEtat() {
-        return etat;
-    }
+
 
     public void setId(long id) {
         this.id = id;
@@ -69,9 +82,19 @@ public class Convention {
         this.date_effet = date_effet;
     }
 
-    public void setEtat(String etat) {
-        this.etat = etat;
+    public Boolean getEtat_signature1() {
+        return etat_signature1;
     }
 
+    public void setEtat_signature1(Boolean etat_signature1) {
+        this.etat_signature1 = etat_signature1;
+    }
 
+    public void setEtat_signature2(Boolean etat_signature2) {
+        this.etat_signature2 = etat_signature2;
+    }
+
+    public Boolean getEtat_signature2() {
+        return etat_signature2;
+    }
 }

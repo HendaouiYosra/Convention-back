@@ -10,30 +10,30 @@ import java.util.List;
 public class ConventionController {
 
     @Autowired
-    private ConventionService employeeService;
+    private ConventionService conventionService;
 
-    @PostMapping("/employee")
-    public Convention saveConvention(@RequestBody Convention employee) {
-        return employeeService.saveConvention(employee);
+    @PostMapping("/convention")
+    public Convention saveConvention(@RequestBody Convention convention) {
+        return conventionService.saveConvention(convention);
     }
 
-    @GetMapping("/employee")
+    @GetMapping("/convention")
     public List<Convention> getAllConventions() {
-        return employeeService.fetchAllConventions();
+        return conventionService.fetchAllConventions();
     }
 
-    @GetMapping("/employee/{id}")
+    @GetMapping("/convention/{id}")
     public Convention getConventionById(@PathVariable("id") Long id) {
-        return employeeService.getConventionById(id);
+        return conventionService.getConventionById(id);
     }
 
-    @PutMapping("/employee/{id}")
-    public Convention updateConvention(@PathVariable("id") Long id, @RequestBody Convention employee) {
-        return employeeService.updateConventionById(id, employee);
+    @PutMapping("/convention/{id}")
+    public Convention updateConvention(@PathVariable("id") Long id, @RequestBody Convention convention) {
+        return conventionService.updateConventionById(id, convention);
     }
 
-    @DeleteMapping("/employee/{id}")
+    @DeleteMapping("/convention/{id}")
     public String deleteConvention(@PathVariable("id") Long id) {
-        return employeeService.deleteDepartmentById(id);
+        return conventionService.deleteDepartmentById(id);
     }
 }
