@@ -3,15 +3,14 @@ package tn.dksoft.convention.service;
 import tn.dksoft.convention.entity.Convention;
 import java.util.List;
 
-public interface ConventionService {
+public interface  ConventionService {
 
-    Convention saveConvention(Convention employee);
+    Convention saveConvention(Convention convention);
 
     List<Convention> fetchAllConventions();
 
-    Convention getConventionById(Long id);
 
-    Convention updateConventionById(Long id, Convention employee);
+    Convention updateConventionById(Long id, Convention convention);
 
     String deleteDepartmentById(Long id);
 }

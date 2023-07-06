@@ -22,10 +22,6 @@ public class ConventionController {
         return conventionService.fetchAllConventions();
     }
 
-    @GetMapping("/convention/{id}")
-    public Convention getConventionById(@PathVariable("id") Long id) {
-        return conventionService.getConventionById(id);
-    }
 
     @PutMapping("/convention/{id}")
     public Convention updateConvention(@PathVariable("id") Long id, @RequestBody Convention convention) {

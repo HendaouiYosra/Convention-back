@@ -23,34 +23,44 @@ public class ConventionServiceImpl implements ConventionService{
         return allConventions;
     }
 
-    @Override
-    public Convention getConventionById(Long id) {
-        Optional<Convention> convention = conventionRepository.findById(id);
-        if (convention.isPresent()) {
-            return convention.get();
-        }
-        return null;
-    }
+
 
     @Override
     public Convention updateConventionById(Long id, Convention convention) {
-        Optional<Convention> convention1 = conventionRepository.findById(id);
+        Optional<Convention> conventionOptional = conventionRepository.findById(id);
 
-        if (convention1.isPresent()) {
-            Convention originalConvention = convention1.get();
+        if (conventionOptional.isPresent()) {
+            Convention originalConvention = conventionOptional.get();
 
-            if (Objects.nonNull(convention.getSociete1()) && !"".equalsIgnoreCase(convention.getSociete1())) {
+            if (convention.getSociete1() != null && !convention.getSociete1().isEmpty()) {
                 originalConvention.setSociete1(convention.getSociete1());
             }
-            if (Objects.nonNull(convention.getSociete2()) && !"".equalsIgnoreCase(convention.getSociete2())) {
+            if (convention.getSociete2() != null && !convention.getSociete2().isEmpty()) {
                 originalConvention.setSociete2(convention.getSociete2());
             }
-
+            if (convention.getDate_creation() != null) {
+                originalConvention.setDate_creation(convention.getDate_creation());
+            }
+            if (convention.getDate_effet() != null) {
+                originalConvention.setDate_effet(convention.getDate_effet());
+            }
+            if (convention.getEtat_signature1() != null) {
+                originalConvention.setEtat_signature1(convention.getEtat_signature1());
+            }
+            if (convention.getEtat_signature2() != null) {
+                originalConvention.setEtat_signature2(convention.getEtat_signature2());
+            }
+            if (convention.getCadre() != null && !convention.getCadre().isEmpty()) {
+                originalConvention.setCadre(convention.getCadre());
+            }
 
             return conventionRepository.save(originalConvention);
+        } else {
+            // Handle the case when the convention with the provided id doesn't exist
+            throw new IllegalArgumentException("Convention with id " + id + " does not exist.");
         }
-        return null;
     }
+
 
     @Override
     public String deleteDepartmentById(Long id) {
