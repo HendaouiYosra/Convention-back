@@ -1,4 +1,5 @@
 package tn.dksoft.convention.controller;
+import org.springframework.http.ResponseEntity;
 import tn.dksoft.convention.entity.Convention;
 import tn.dksoft.convention.service.ConventionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ public class ConventionController {
     public Convention saveConvention(@RequestBody Convention convention) {
         return conventionService.saveConvention(convention);
     }
+    @GetMapping("/convention/{id}")
+    public Convention getConventionById(@PathVariable("id") Long id) {
+        return conventionService.getConventionById(id);
+    }
 
     @GetMapping("/convention")
     public List<Convention> getAllConventions() {
@@ -29,7 +34,7 @@ public class ConventionController {
     }
 
     @DeleteMapping("/convention/{id}")
-    public String deleteConvention(@PathVariable("id") Long id) {
-        return conventionService.deleteDepartmentById(id);
+    public void deleteConvention(@PathVariable("id") Long id) {
+        conventionService.deleteConventionById(id);
     }
 }

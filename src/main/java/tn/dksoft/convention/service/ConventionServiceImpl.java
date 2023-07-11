@@ -1,12 +1,13 @@
 package tn.dksoft.convention.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tn.dksoft.convention.entity.Convention;
 import tn.dksoft.convention.repository.ConventionRepository;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,15 @@ public class ConventionServiceImpl implements ConventionService{
         List<Convention> allConventions = conventionRepository.findAll();
         return allConventions;
     }
+    @Override
+    public Convention getConventionById(long id){
+        Optional<Convention> convention = conventionRepository.findById(id);
+        if (convention.isPresent()) {
+            return convention.get();
+        }
+        return null;
+    }
+
 
 
 
@@ -63,12 +73,9 @@ public class ConventionServiceImpl implements ConventionService{
 
 
     @Override
-    public String deleteDepartmentById(Long id) {
-        if (conventionRepository.findById(id).isPresent()) {
-            conventionRepository.deleteById(id);
-            return "Convention deleted successfully";
-        }
-        return "No such convention in the database";
-    }
+    public void deleteConventionById(Long id) {
+        conventionRepository.deleteById(id);}
+
+
 
 }
