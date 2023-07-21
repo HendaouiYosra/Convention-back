@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,11 +24,13 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Value("${jwt.secret}")
     private String secretKey;
@@ -35,8 +38,8 @@ public class SecurityConfig {
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
         PasswordEncoder passwordEncoder=passwordEncoder();
         return new InMemoryUserDetailsManager(
-                User.withUsername("user1").password(passwordEncoder.encode("1010")).authorities("USER1").build(),
-                User.withUsername("user2").password(passwordEncoder.encode("1111")).authorities("USER","ADMIN").build()
+                User.withUsername("user1").password(passwordEncoder.encode("1010")).authorities("USER").build(),
+                User.withUsername("admin").password(passwordEncoder.encode("1111")).authorities("USER","ADMIN").build()
         );
     }
     @Bean
@@ -48,11 +51,14 @@ public class SecurityConfig {
         return httpSecurity
                 .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(cs->cs.disable())
-                .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+                .authorizeHttpRequests(ar ->
+                        ar.requestMatchers(new AntPathRequestMatcher("/auth/login/**")).permitAll()
+                                .anyRequest().authenticated()
+                )
                 .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()))
                 .build();
-
     }
+
     @Bean
     JwtEncoder jwtEncoder(){
        // String secretKey="Zb7Dq9Efx2hT3KlVp4oX5sY6mRnAt8YuJbQcWi1jZgSeFrGhOs0dP2vCaB3N4IeR";
