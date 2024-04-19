@@ -38,8 +38,7 @@ import java.util.List;
 public class SecurityConfig {
     @Value("${jwt.secret}")
     private String secretKey;
-    @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
+    @Bean    public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
         PasswordEncoder passwordEncoder=passwordEncoder();
         return new InMemoryUserDetailsManager(
                 User.withUsername("user1").password(passwordEncoder.encode("1010")).authorities("USER").build(),
